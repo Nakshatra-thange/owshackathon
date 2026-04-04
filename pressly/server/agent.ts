@@ -4,11 +4,13 @@ import { generateNewsletter } from './tools/generate'
 import { chargeSubscribers } from './tools/charge'
 import { sendNewsletter } from './tools/sendEmail'
 import { logTransaction } from './ledger'
-
+import { resetSession, getSessionData } from './ledger'
+import { saveRun } from './database'
 const SPEND_CAP = 0.10 
 let totalSpent = 0
 
 export async function runAgent(topic: string) {
+  resetSession()
   console.log(`[Agent] Starting run. Topic: ${topic}`)
   
   broadcast({ event: 'agent_start', message: `Pressly agent starting. Topic: "${topic}"` })
@@ -43,7 +45,12 @@ export async function runAgent(topic: string) {
         totalSpent += 0.002
       }
     const lines = newsletter.split('\n')
-    const subject = lines[0].replace('Subject:', '').trim()
+    const subject = lines[0]
+  .replace(/^subject:/i, '')
+  .replace(/[\n\r\u2028\u2029]/g, ' ')  // catches ALL newline variants
+  .replace(/\*/g, '')
+  .replace(/[^\x20-\x7E]/g, '')          // removes ALL non-ASCII characters
+  .trim()
     const body = lines.slice(1).join('\n')
 
     
@@ -53,12 +60,29 @@ export async function runAgent(topic: string) {
         preview: body.slice(0, 200) 
     })
     await waitForApproval() 
-
+    console.log('[Agent] Approval done. Charging subscribers...')
     
     await chargeSubscribers()
 
-    
-    await sendNewsletter(body, subject)
+    console.log('[Agent] Charging done. Sending email...')
+    console.log('[Agent] Subject being sent:', JSON.stringify(subject))
+console.log('[Agent] Body length:', body.length)
+const cleanSubject = subject.replace(/[^\x20-\x7E]/g, '').trim()
+console.log('[Agent] Clean subject:', JSON.stringify(cleanSubject))
+    await sendNewsletter(cleanSubject,body)
+    console.log('[Agent] Email sent.')
+
+    const session = getSessionData()
+saveRun({
+  topic,
+  subject,
+  startedAt: new Date().toISOString(),
+  completedAt: new Date().toISOString(),
+  earned: session.earned,
+  spent: session.spent,
+  profit: session.earned - session.spent,
+  transactions: session.transactions
+})
 
     broadcast({ 
         event: 'agent_done', 
@@ -76,9 +100,14 @@ export async function runAgent(topic: string) {
 
 function waitForApproval(): Promise<void> {
   return new Promise(resolve => {
-   
     const check = setInterval(() => {
-      
+      if (!isPaused()) {  
+        clearInterval(check)
+        resolve()
+      }
+    }, 500)
+
+    setTimeout(() => {
       clearInterval(check)
       resolve()
     }, 5000)

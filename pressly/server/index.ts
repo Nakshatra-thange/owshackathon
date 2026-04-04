@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
+import { getRuns, getTotals } from './database'
+
 
 import express from 'express'
 import  WebSocket from 'ws'
@@ -37,5 +39,11 @@ let paused = false
 export const isPaused = () => paused
 app.post('/api/pause', (_, res) => { paused = true; res.json({ paused: true }) })
 app.post('/api/resume', (_, res) => { paused = false; res.json({ paused: false }) })
+app.get('/api/history', (_, res) => {
+  res.json({
+    runs: getRuns(),
+    totals: getTotals()
+  })
+})
 
 server.listen(3001, () => console.log('Pressly server on :3001'))

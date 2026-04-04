@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import RunHistory from '../RunHistory'
 interface LogEntry { message: string; status?: string; timestamp: string }
 interface PnL { earned: string; spent: string; profit: string; lastTx?: any }
 
@@ -115,6 +115,13 @@ export default function Dashboard() {
           >
             ⏸ Pause
           </button>
+          <button
+  onClick={() => fetch('http://localhost:3001/api/resume', { method: 'POST' })}
+  className="px-5 py-3.5 rounded-sm font-semibold text-sm bg-warning text-primary-foreground
+                       hover:brightness-110 transition-all duration-200 cursor-pointer"
+>
+  ▶ Resume
+</button>
         </div>
 
         {/* Agent Log */}
@@ -134,7 +141,16 @@ export default function Dashboard() {
                 <span className="text-muted-foreground/40 shrink-0 text-xs leading-6">{log.timestamp}</span>
                 <span className="text-foreground/90">{log.message}</span>
               </div>
-            ))}
+          ))}
+          </div>
+        </div>
+
+        <div className="bg-card border border-border rounded-sm overflow-hidden mt-6">
+          <div className="px-6 py-4 border-b border-border">
+            <span className="text-[10px] font-semibold text-muted-foreground tracking-[0.25em] uppercase">Run History</span>
+          </div>
+          <div className="px-6 py-4">
+            <RunHistory />
           </div>
         </div>
       </div>

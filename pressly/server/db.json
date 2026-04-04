@@ -1,0 +1,218 @@
+{
+  "runs": [
+    {
+      "id": "1775286111579",
+      "topic": "cooking",
+      "subject": "Savoring Japan: Sushi, Sashimi, Dashi & Smart Stove Tips",
+      "startedAt": "2026-04-04T07:01:51.579Z",
+      "completedAt": "2026-04-04T07:01:51.579Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T07:01:32.142Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T07:01:44.776Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T07:01:50.382Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T07:01:50.985Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T07:01:51.578Z"
+        }
+      ]
+    },
+    {
+      "id": "1775285860369",
+      "topic": "cooking",
+      "subject": "We need to write a newsletter about \"cooking\" using the given points (1-5). The content seems to be bullet points summarizing each point? We need to include these items in the newsletter. Likely need to combine them into a newsletter with sections. Must start with \"Subject: [subject]\" then body. Keep under 200 words. So we need a concise newsletter, maybe ~150 words.",
+      "startedAt": "2026-04-04T06:57:40.369Z",
+      "completedAt": "2026-04-04T06:57:40.369Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T06:57:11.423Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T06:57:32.973Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T06:57:38.580Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T06:57:39.182Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T06:57:40.368Z"
+        }
+      ]
+    },
+    {
+      "id": "1775285503584",
+      "topic": "sports",
+      "subject": "The Future of Sports: AI, Crypto, Blockchain, and Autonomous Agents",
+      "startedAt": "2026-04-04T06:51:43.584Z",
+      "completedAt": "2026-04-04T06:51:43.584Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T06:51:29.717Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T06:51:36.873Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T06:51:42.478Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T06:51:43.081Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T06:51:43.583Z"
+        }
+      ]
+    },
+    {
+      "id": "1775285229849",
+      "topic": "sports",
+      "subject": "How AI, Crypto & Autonomous Tech Are Transforming Sports",
+      "startedAt": "2026-04-04T06:47:09.848Z",
+      "completedAt": "2026-04-04T06:47:09.848Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T06:46:53.627Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T06:47:02.234Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T06:47:07.840Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T06:47:08.442Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T06:47:09.847Z"
+        }
+      ]
+    },
+    {
+      "id": "1775285050156",
+      "topic": "AI agents and technology",
+      "subject": "The Rise of Autonomous AI, Crypto Micropayments, and the Solana‑Powered Future",
+      "startedAt": "2026-04-04T06:44:10.156Z",
+      "completedAt": "2026-04-04T06:44:10.156Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T06:43:43.529Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T06:44:02.911Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T06:44:08.516Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T06:44:09.119Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T06:44:10.154Z"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "earned": 0.1,
+    "spent": 0.075
+  }
+}

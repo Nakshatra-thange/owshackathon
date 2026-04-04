@@ -1,21 +1,22 @@
 import { broadcast } from '../index'
 import { logTransaction } from '../ledger'
+import { Resend } from 'resend'
 
 export async function sendNewsletter(subject: string, body: string): Promise<void> {
   broadcast({
     event: 'agent_step',
-    message: `📧 Sending newsletter: "${subject}"`,
+    message: `Sending newsletter: "${subject}"`,
     status: 'running'
   })
 
   try {
-    const { Resend } = await import('resend')
+    
 
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend(process.env.RESEND_API_KEY!)
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       to: process.env.DEMO_EMAIL!,
-      from: process.env.RESEND_FROM_EMAIL!,
+      from: 'onboarding@resend.dev',
       subject,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
@@ -29,12 +30,13 @@ export async function sendNewsletter(subject: string, body: string): Promise<voi
         </div>
       `
     })
+    console.log('Resend result:', JSON.stringify(result))
 
     logTransaction('spend', 0.005, 'Email delivery via Resend')
 
     broadcast({
       event: 'agent_step',
-      message: `✅ Newsletter delivered (real email)`,
+      message: `Newsletter delivered (real email)`,
       status: 'done'
     })
 
@@ -47,7 +49,7 @@ export async function sendNewsletter(subject: string, body: string): Promise<voi
 
     broadcast({
       event: 'agent_step',
-      message: `⚠️ Email fallback triggered`,
+      message: `Email fallback triggered`,
       status: 'warning'
     })
   }
