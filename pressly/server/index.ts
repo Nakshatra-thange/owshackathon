@@ -13,10 +13,14 @@ import { runAgent } from './agent'
 
 const app = express()
 app.use(cors({
-    origin: 'http://localhost:8080'
-  }))
+    origin: ['http://localhost:8080',
+    'https://pressly-iota.vercel.app'
+  ]}))
   
 app.use(express.json())
+app.get('/', (_, res) => {
+  res.json({ status: 'Pressly server running' })
+})
 
 
 const server = createServer(app)

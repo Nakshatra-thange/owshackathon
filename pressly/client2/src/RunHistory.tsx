@@ -13,9 +13,9 @@ interface Run {
 export default function RunHistory() {
   const [runs, setRuns] = useState<Run[]>([])
   const [totals, setTotals] = useState({ earned: 0, spent: 0, profit: 0 })
-
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   useEffect(() => {
-    fetch('http://localhost:3001/api/history')
+    fetch(`${API_URL}/api/history`)
       .then(r => r.json())
       .then(data => {
         setRuns(data.runs)
