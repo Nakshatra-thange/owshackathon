@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import  dotenv from 'dotenv'
 dotenv.config()
 import { getRuns, getTotals } from './database'
 
@@ -21,6 +21,14 @@ app.use(express.json())
 
 const server = createServer(app)
 const wss = new WebSocket.Server({ port: 3002 })
+wss.on('connection', (ws) => {
+  const interval = setInterval(() => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.ping()
+    }
+  }, 30000)
+  ws.on('close', () => clearInterval(interval))
+})
 
 export function broadcast(event: object) {
   const msg = JSON.stringify(event)
