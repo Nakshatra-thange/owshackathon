@@ -1,0 +1,86 @@
+import { broadcast , isPaused } from './index'
+import { scrapeTrendingTopics } from './tools/scrape'
+import { generateNewsletter } from './tools/generate'
+import { chargeSubscribers } from './tools/charge'
+import { sendNewsletter } from './tools/sendEmail'
+import { logTransaction } from './ledger'
+
+const SPEND_CAP = 0.10 
+let totalSpent = 0
+
+export async function runAgent(topic: string) {
+  console.log(`[Agent] Starting run. Topic: ${topic}`)
+  
+  broadcast({ event: 'agent_start', message: `Pressly agent starting. Topic: "${topic}"` })
+  totalSpent = 0
+
+  try {
+    console.log('[Agent] Calling scrape...') 
+    const content = await scrapeTrendingTopics(topic)
+    totalSpent += 0.01
+    console.log('[Agent] Scrape done. Calling generate...')
+    if (!content || content.length < 20) {
+        broadcast({
+          event: 'agent_error',
+          message: `No useful content found. Stopping.`
+        })
+        return
+      }
+    if (totalSpent >= SPEND_CAP) {
+      broadcast({ event: 'agent_halt', message: `🛑 Spend cap reached. Halting.` })
+      return
+    }
+    let newsletter = await generateNewsletter(topic, content)
+    totalSpent += 0.002
+    if (!newsletter || newsletter.length < 100) {
+        broadcast({
+          event: 'agent_step',
+          message: `Content weak → regenerating...`,
+          status: 'warning'
+        })
+  
+        newsletter = await generateNewsletter(topic, content)
+        totalSpent += 0.002
+      }
+    const lines = newsletter.split('\n')
+    const subject = lines[0].replace('Subject:', '').trim()
+    const body = lines.slice(1).join('\n')
+
+    
+    broadcast({ 
+        event: 'awaiting_approval', 
+        subject, 
+        preview: body.slice(0, 200) 
+    })
+    await waitForApproval() 
+
+    
+    await chargeSubscribers()
+
+    
+    await sendNewsletter(body, subject)
+
+    broadcast({ 
+        event: 'agent_done', 
+        message: `Pressly cycle complete. 
+        Check P&L for profit.` 
+    })
+
+  } catch (err: any) {
+    broadcast({ 
+        event: 'agent_error', 
+        message: `Agent error: ${err.message}` 
+    })
+  }
+}
+
+function waitForApproval(): Promise<void> {
+  return new Promise(resolve => {
+   
+    const check = setInterval(() => {
+      
+      clearInterval(check)
+      resolve()
+    }, 5000)
+  })
+}
