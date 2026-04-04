@@ -11,9 +11,11 @@ export default function Dashboard() {
   const [topic, setTopic] = useState('AI agents and technology');
   const logRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+  const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3002'
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3002');
+  
+    const ws = new WebSocket(WS_URL)
     ws.onmessage = (msg) => {
       const data = JSON.parse(msg.data);
       if (data.event === 'pnl_update') {
@@ -31,7 +33,7 @@ export default function Dashboard() {
   const runAgent = async () => {
     setRunning(true);
     setLogs([]);
-    await fetch('http://localhost:3001/api/run', {
+    await fetch(`${API_URL}/api/run`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ topic })
     });
@@ -106,17 +108,17 @@ export default function Dashboard() {
                 : 'bg-earn text-primary-foreground hover:brightness-110 cursor-pointer'
               }`}
           >
-            {running ? '⚙️ Running...' : '▶ Run Agent'}
+            {running ? 'Running...' : '▶ Run Agent'}
           </button>
           <button
-            onClick={() => fetch('http://localhost:3001/api/pause', { method: 'POST' })}
+            onClick={() => fetch(`${API_URL}/api/pause`, { method: 'POST' })}
             className="px-5 py-3.5 rounded-sm font-semibold text-sm bg-warning text-primary-foreground
                        hover:brightness-110 transition-all duration-200 cursor-pointer"
           >
             ⏸ Pause
           </button>
           <button
-  onClick={() => fetch('http://localhost:3001/api/resume', { method: 'POST' })}
+  onClick={() => fetch(`${API_URL}/api/resume`, { method: 'POST' })}
   className="px-5 py-3.5 rounded-sm font-semibold text-sm bg-warning text-primary-foreground
                        hover:brightness-110 transition-all duration-200 cursor-pointer"
 >
@@ -124,7 +126,7 @@ export default function Dashboard() {
 </button>
         </div>
 
-        {/* Agent Log */}
+       
         <div className="bg-card border border-border rounded-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-border flex items-center justify-between">
             <span className="text-[10px] font-semibold text-muted-foreground tracking-[0.25em] uppercase">Agent Log</span>
