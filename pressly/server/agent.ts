@@ -3,7 +3,7 @@ import { scrapeTrendingTopics } from './tools/scrape'
 import { generateNewsletter } from './tools/generate'
 import { chargeSubscribers } from './tools/charge'
 import { sendNewsletter } from './tools/sendEmail'
-import { logTransaction } from './ledger'
+
 import { resetSession, getSessionData } from './ledger'
 import { saveRun } from './database'
 const SPEND_CAP = 0.10 
@@ -47,9 +47,9 @@ export async function runAgent(topic: string) {
     const lines = newsletter.split('\n')
     const subject = lines[0]
   .replace(/^subject:/i, '')
-  .replace(/[\n\r\u2028\u2029]/g, ' ')  // catches ALL newline variants
+  .replace(/[\n\r\u2028\u2029]/g, ' ')  
   .replace(/\*/g, '')
-  .replace(/[^\x20-\x7E]/g, '')          // removes ALL non-ASCII characters
+  .replace(/[^\x20-\x7E]/g, '')          
   .trim()
     const body = lines.slice(1).join('\n')
 

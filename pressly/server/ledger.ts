@@ -8,7 +8,7 @@ interface Transaction {
   timestamp: string
 }
 
-// Session transactions (current run only)
+
 let sessionTransactions: Transaction[] = []
 let sessionEarned = 0
 let sessionSpent = 0
@@ -29,16 +29,15 @@ export function logTransaction(type: 'earn' | 'spend', amount: number, descripti
   if (type === 'earn') sessionEarned += amount
   else sessionSpent += amount
 
-  // Get all-time totals from DB and add current session
   const allTime = getTotals()
 
   broadcast({
     event: 'pnl_update',
-    // Session (current run)
+    
     earned: sessionEarned.toFixed(4),
     spent: sessionSpent.toFixed(4),
     profit: (sessionEarned - sessionSpent).toFixed(4),
-    // All time (persistent)
+   
     totalEarned: (allTime.earned + sessionEarned).toFixed(4),
     totalSpent: (allTime.spent + sessionSpent).toFixed(4),
     totalProfit: (allTime.profit + sessionEarned - sessionSpent).toFixed(4),
