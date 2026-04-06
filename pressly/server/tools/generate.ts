@@ -19,7 +19,7 @@ export async function generateNewsletter(topic: string, scrapedContent: string):
 
   try {
     const response = await client.chat.completions.create({
-      model: 'nvidia/nemotron-3-super-120b-a12b:free',
+      model: 'qwen/qwen3.6-plus:free',
       max_tokens: 500,
       messages: [
         {
