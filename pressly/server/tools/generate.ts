@@ -18,18 +18,16 @@ export async function generateNewsletter(topic: string, scrapedContent: string):
   broadcast({ event: 'agent_step', message: `Writing newsletter about: ${topic}`, status: 'running' })
 
   try {
-    const response = await client.chat.completions.create({
+    const response = await (client.chat.completions.create as any)({
       model: 'qwen/qwen3.6-plus:free',
       max_tokens: 500,
+      extra_body: {
+        thinking: false
+      },
       messages: [
         {
           role: 'system',
-          content: `You are Pressly, a newsletter writing agent. 
-      Output ONLY the newsletter. No thinking. No explanations. No word counts.
-      First line must be: Subject: [subject line]
-      Then write the newsletter body.
-      Maximum 200 words total.
-      Do not explain what you are doing. Just write the newsletter.`
+          content: `You are Pressly, a newsletter writing agent. Output ONLY the newsletter. No thinking. No explanations. No word counts. First line must be: Subject: [subject line]. Then write the newsletter body. Maximum 200 words total. Do not explain what you are doing. Just write the newsletter.`
         },
         {
           role: 'user',
