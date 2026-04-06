@@ -14,21 +14,39 @@ export default function Dashboard() {
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3002'
   useEffect(() => {
-    // Try WebSocket first
-    const ws = new WebSocket(WS_URL)
-    ws.onmessage = (msg) => {
+    // WebSocket — works locally
+    let ws: WebSocket
+    try {
+      ws = new WebSocket(WS_URL)
+      ws.onmessage = (msg) => {
+        const data = JSON.parse(msg.data)
+        handleEvent(data)
+      }
+    } catch(e) {}
+  
+    // SSE — works on Render
+    const sse = new EventSource(`${API_URL}/api/stream`)
+    sse.onmessage = (msg) => {
       const data = JSON.parse(msg.data)
+      handleEvent(data)
+    }
+  
+    function handleEvent(data: any) {
       if (data.event === 'pnl_update') {
         setPnl({ earned: data.earned, spent: data.spent, profit: data.profit, lastTx: data.lastTx })
       }
       if (data.message) {
-        setLogs(prev => [...prev, { message: data.message, status: data.status, timestamp: new Date().toLocaleTimeString() }])
+        setLogs(prev => {
+          const last = prev[prev.length - 1]
+          if (last && last.message === data.message) return prev // prevent duplicates
+          return [...prev, { message: data.message, status: data.status, timestamp: new Date().toLocaleTimeString() }]
+        })
         setTimeout(() => logRef.current?.scrollTo(0, logRef.current.scrollHeight), 50)
       }
       if (data.event === 'agent_done' || data.event === 'agent_error') setRunning(false)
     }
   
-    // Also poll /api/history every 3 seconds as fallback
+    // Poll history every 3s as final fallback for P&L
     const poll = setInterval(async () => {
       try {
         const r = await fetch(`${API_URL}/api/history`)
@@ -44,7 +62,8 @@ export default function Dashboard() {
     }, 3000)
   
     return () => {
-      ws.close()
+      ws?.close()
+      sse.close()
       clearInterval(poll)
     }
   }, [])
