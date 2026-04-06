@@ -100,16 +100,18 @@ saveRun({
 
 function waitForApproval(): Promise<void> {
   return new Promise(resolve => {
+    // Auto-approve after 5 seconds if never paused
+    let elapsed = 0
     const check = setInterval(() => {
-      if (!isPaused()) {  
-        clearInterval(check)
-        resolve()
+      elapsed += 500
+      if (!isPaused()) {
+        if (elapsed >= 5000) {  // only auto-approve after 5 seconds
+          clearInterval(check)
+          resolve()
+        }
       }
+      // If paused, keep waiting — don't resolve
+      // Resolves only when unpaused AND 5 seconds have passed
     }, 500)
-
-    setTimeout(() => {
-      clearInterval(check)
-      resolve()
-    }, 5000)
   })
 }

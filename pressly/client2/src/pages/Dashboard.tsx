@@ -14,21 +14,40 @@ export default function Dashboard() {
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
   const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3002'
   useEffect(() => {
-  
+    // Try WebSocket first
     const ws = new WebSocket(WS_URL)
     ws.onmessage = (msg) => {
-      const data = JSON.parse(msg.data);
+      const data = JSON.parse(msg.data)
       if (data.event === 'pnl_update') {
-        setPnl({ earned: data.earned, spent: data.spent, profit: data.profit, lastTx: data.lastTx });
+        setPnl({ earned: data.earned, spent: data.spent, profit: data.profit, lastTx: data.lastTx })
       }
       if (data.message) {
-        setLogs(prev => [...prev, { message: data.message, status: data.status, timestamp: new Date().toLocaleTimeString() }]);
-        setTimeout(() => logRef.current?.scrollTo(0, logRef.current.scrollHeight), 50);
+        setLogs(prev => [...prev, { message: data.message, status: data.status, timestamp: new Date().toLocaleTimeString() }])
+        setTimeout(() => logRef.current?.scrollTo(0, logRef.current.scrollHeight), 50)
       }
-      if (data.event === 'agent_done' || data.event === 'agent_error') setRunning(false);
-    };
-    return () => ws.close();
-  }, []);
+      if (data.event === 'agent_done' || data.event === 'agent_error') setRunning(false)
+    }
+  
+    // Also poll /api/history every 3 seconds as fallback
+    const poll = setInterval(async () => {
+      try {
+        const r = await fetch(`${API_URL}/api/history`)
+        const data = await r.json()
+        if (data.totals) {
+          setPnl({
+            earned: data.totals.earned.toFixed(4),
+            spent: data.totals.spent.toFixed(4),
+            profit: data.totals.profit.toFixed(4)
+          })
+        }
+      } catch(e) {}
+    }, 3000)
+  
+    return () => {
+      ws.close()
+      clearInterval(poll)
+    }
+  }, [])
 
   const runAgent = async () => {
     setRunning(true);
