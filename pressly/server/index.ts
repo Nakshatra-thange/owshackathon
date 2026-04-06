@@ -10,6 +10,7 @@ import { createServer } from 'http'
 import cors from 'cors'
 
 import { runAgent } from './agent'
+const PORT = process.env.PORT || 3001
 
 const app = express()
 app.use(cors({
@@ -58,4 +59,4 @@ app.get('/api/history', (_, res) => {
   })
 })
 
-server.listen(3001, () => console.log('Pressly server on :3001'))
+server.listen(PORT, () => console.log(`Pressly server on :${PORT}`))

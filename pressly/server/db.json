@@ -1,6 +1,90 @@
 {
   "runs": [
     {
+      "id": "1775306889088",
+      "topic": "blockchain ",
+      "subject": "Quantum-Resistant Blockchains & Crypto Trends: Naoris, Cardano, Polymarket, ARKK & Actif Depovie Review",
+      "startedAt": "2026-04-04T12:48:09.087Z",
+      "completedAt": "2026-04-04T12:48:09.087Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T12:47:55.354Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T12:48:06.295Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T12:48:07.399Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T12:48:08.001Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T12:48:09.086Z"
+        }
+      ]
+    },
+    {
+      "id": "1775306738761",
+      "topic": "AI agents and technology",
+      "subject": "AI Agents Shaping Browsers, Workforce, and Enterprise Tech",
+      "startedAt": "2026-04-04T12:45:38.761Z",
+      "completedAt": "2026-04-04T12:45:38.761Z",
+      "earned": 0.02,
+      "spent": 0.015,
+      "profit": 0.005000000000000001,
+      "transactions": [
+        {
+          "type": "spend",
+          "amount": 0.01,
+          "description": "Scraped trending topics (x402 simulated)",
+          "timestamp": "2026-04-04T12:45:24.840Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0,
+          "description": "Nemotron generation (free)",
+          "timestamp": "2026-04-04T12:45:36.442Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_001 paid for newsletter",
+          "timestamp": "2026-04-04T12:45:37.548Z"
+        },
+        {
+          "type": "earn",
+          "amount": 0.01,
+          "description": "Subscriber sub_002 paid for newsletter",
+          "timestamp": "2026-04-04T12:45:38.150Z"
+        },
+        {
+          "type": "spend",
+          "amount": 0.005,
+          "description": "Email delivery via Resend",
+          "timestamp": "2026-04-04T12:45:38.760Z"
+        }
+      ]
+    },
+    {
       "id": "1775286111579",
       "topic": "cooking",
       "subject": "Savoring Japan: Sushi, Sashimi, Dashi & Smart Stove Tips",
@@ -212,7 +296,7 @@
     }
   ],
   "totals": {
-    "earned": 0.1,
-    "spent": 0.075
+    "earned": 0.14,
+    "spent": 0.105
   }
 }
